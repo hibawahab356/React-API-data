@@ -7,6 +7,7 @@ import "../App.css"
 const Products = () => {
 const [products, setProducts] = useState([])
 const [error, setError] = useState("")
+const [loading, setLoading] = useState(true)
 
 useEffect(()=>{
 
@@ -18,7 +19,12 @@ try{
     catch (error) {
                 console.log(error)
                 setError("Failed to fetch data ")
-            }           
+            }     
+            
+            
+             finally {
+                setLoading(false)
+            }
 })
 
    fetchProducts()
@@ -26,6 +32,9 @@ try{
 
 
 },[])
+ if (loading) {
+        return <h2 className="loading">Loading Characters...</h2>
+    }
 if (error) {
         return (
             <div>
@@ -38,35 +47,81 @@ if (error) {
   return (
 
 
+<div className="main-wrapper">
 
-    <div className="container">
+            <div className="hero-section">
 
-        <h1 className="heading">Disney Characters</h1>
+                <span className="top-label">THE MAGICAL COLLECTION</span>
 
-        <p className="subtitle">
-            Explore Your Favourite Disney Characters
-        </p>
+                <h1 className="heading">
+                    Disney <span>Universe</span>
+                </h1>
 
-        <div className="pokemon-container">
+                <p className="subtitle">
+                    Discover the magical world of your favourite
+                    Disney characters.
+                </p>
 
-            {products.map((character) => (
+                <div className="hero-line"></div>
 
-                <div className="pokemon-card" key={character._id}>
+            </div>
 
-                    <img
-                        src={character.imageUrl}
-                        alt={character.name}
-                    />
+            <div className="container">
 
-                    <h2>{character.name}</h2>
+                <div className="section-heading">
+                    <div>
+                        <span className="small-heading">EXPLORE THE MAGIC</span>
+                        <h2>Favourite Characters</h2>
+                    </div>
+
+                    <p>Magical stories, unforgettable characters.</p>
+                </div>
+
+                <div className="pokemon-container">
+
+                    {products.map((character) => (
+
+                        <div className="pokemon-card" key={character._id}>
+
+                            <div className="image-box">
+
+                                <img
+                                    src={character.imageUrl}
+                                    alt={character.name}
+                                    loading="lazy"
+                                />
+
+                            </div>
+
+                            <div className="card-content">
+
+                                <span className="character-label">
+                                    DISNEY CHARACTER
+                                </span>
+
+                                <h3>{character.name}</h3>
+
+                                <div className="card-bottom">
+                                    <span>Discover the magic</span>
+                                    <span className="arrow">↗</span>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    ))}
 
                 </div>
 
-            ))}
+            </div>
+
+            <footer className="footer">
+                <h2>Where Every Story Begins With Magic.</h2>
+                <p>Explore • Imagine • Believe</p>
+            </footer>
 
         </div>
-
-    </div>
 
 
     );
